@@ -3,7 +3,7 @@
 Store Csocsó game results on Algorand Testnet, using packed libraries for algosdk, jquery and perawalletconnect.
 
 The `perawalletconnect.min.js` library has been made by packing the `@perawallet/connect 1.3.4` Node.js module
-by webpack, see https://github.com/https://github.com/A-Maugli/pera-conect-vanillajs-demo-webpack
+by webpack, see https://github.com/A-Maugli/pera-conect-vanillajs-demo-webpack
 
 ## SRI (sub resource integrity)
 
