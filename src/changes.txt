@@ -1,0 +1,5 @@
+v0.2.13
+- add 'Force reconnect' button, which disconnects previous wallet connect session
+- add 'Read game results, last 10 txn', to list only the latest game results
+- add CSS margin around 'input' and 'button' html elements
+- write out version to title
