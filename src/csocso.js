@@ -4,7 +4,7 @@
 //const pwcsdk = require('@perawallet/connect');
 //const $ = require('jquery');
 
-const ver = "0.2.12"; // Use PeraWalletConnect(); 
+const ver = "0.2.13"; // Use PeraWalletConnect(); 
 
 /* Algonode.io API */
 const baseServer = "https://testnet-api.algonode.cloud";
@@ -56,6 +56,15 @@ async function handleDisconnectWalletA() {
   console.log('Info in handleDisconnectWallet: ', 'disconnected');
   let accountAddress = "";
   return accountAddress;
+}
+
+function force_reconnect() {
+  (async () => {
+    await handleDisconnectWalletA();
+  })().catch(e => {
+    console.log(e);
+    $('#send_tx_status').val(e);
+  });
 }
 
 function algo_send_tx(algod_client, note) {
@@ -163,7 +172,7 @@ function make_list_from_tx(tx) {
 }
 
 
-function algo_get_tx() {
+function algo_get_tx_all() {
   if ($('#get_tx_status').val() !== working) {
     (async () => {
       $('#get_tx_status').val(working);
@@ -192,11 +201,35 @@ function algo_get_tx() {
   }
 }
 
+function algo_get_tx_last_10() {
+  if ($('#get_tx_status').val() !== working) {
+    (async () => {
+      $('#get_tx_status').val(working);
+      $('#game_list').empty();
+
+      let tx_limit = 10;
+      let list = "";
+
+      let tx = await indexer_client
+          .lookupAccountTransactions(addr_src)
+          .limit(tx_limit).do();
+      list += make_list_from_tx(tx);
+
+      $('#get_tx_status').val(ready);
+      $("#game_list").append(list);
+      $("#game_list").show();
+    })().catch(e => {
+      console.log(e);
+    });
+  }
+}
+
 $(window.document).ready(function () {
   console.log("document ready");
   const game_name = "Csocsó";
   const user1 = "CsG";
   const user2 = "LG";
+  $('#title').text($('#title').text() + `, v${ver}`);
   $('#game').val(game_name);
   $('#user1').val(user1);
   $('#user2').val(user2);
@@ -208,14 +241,24 @@ $(window.document).ready(function () {
   $('#game_list').empty();
   $('#get_tx_status').val('');
 
+  $('#force_reconnect').on("click", function () {
+    console.log("Handler for `Force reconnect` is called.");
+    force_reconnect();
+  });
+
   $('#store_game_result').on("click", function () {
     console.log("Handler for `Store game result` is called.");
     algo_send_tx_outer();
   });
 
-  $('#read_game_results').on("click", function () {
-    console.log("Handler for `Read game results` is called.");
-    algo_get_tx();
+  $('#read_game_results_all').on("click", function () {
+    console.log("Handler for `Read game results, all` is called.");
+    algo_get_tx_all();
+  });
+
+  $('#read_game_results_last_10_txn').on("click", function () {
+    console.log("Handler for `Read game results, last 10 txn` is called.");
+    algo_get_tx_last_10();
   });
 
 });

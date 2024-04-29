@@ -11,23 +11,28 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
     crossorigin="anonymous"></script>
-  <script src="./jslib/perawalletconnect.min.js"
-    integrity="sha384-1/BfpY6oNlkbLhIQ2HqXVz2NzZb2zw5D6iDz6Qkdi1E6dCxZyJm1+NN9SMLamlXm"
+  <script src="../csocso/jslib/perawalletconnect.min.js"
+    integrity="sha384-1M3hNUZtk1kZWkZntBxOmJoph4gBINIs+xNhTyuGZXFDr+gX5EC+ZY7SU1M6s3nI"
     crossorigin="anonymous"></script>
   <script src="./csocso.js"
-    integrity="sha384-wXxHFUa3fMJmbH41xry3h3s7BWS9VkUWHE4j6ZoFpLPRYMGIB6v/oSaCFJajqfzm"
+    integrity="sha384-ne7o+rMY5dKBorhL/xbWIw2d8BNsuOM5Zi3qyVesZBeBhl1iALjfCYWm+EpVcQ7/"
     crossorigin="anonymous"></script>
+  <style>
+    input {margin: 5px;}
+    button {margin: 5px;}
+  </style>
 </head>
 
 <body>
-  <h2>Store game result</h2>
+  <h2 id="title">Store game result</h2>
   <p>
     <input type="text" aria-label="Name of game" id="game" size="10" readonly tabindex="-1"><br />
     <input type="text" aria-label="Name of user1" id="user1" size="10" tabindex="-1">
     <input type="text" aria-label="Result of user1" id="goal1" size="3" autofocus tabindex="1"><br />
     <input type="text" aria-label="Name of user2" id="user2" size="10" tabindex="-1">
     <input type="text" aria-label="Result of user2" id="goal2" size="3" tabindex="2"><br />
-    <button type="button" id="store_game_result" tabindex="3">Store game result</button>
+    <button type="button" id="force_reconnect" tabindex="3">Force reconnect</button>
+    <button type="button" id="store_game_result" tabindex="4">Store game result</button>
   </p>
   <p>
     Tx id: <input type="text" aria-label="Tx id on blockchain" id="tx_id" size="70" readonly tabindex="-1"><br />
@@ -40,10 +45,12 @@
 
   <h2>Read game results</h2>
   <p>
-    <button type="button" id="read_game_results" tabindex="4">Read game results</button><br />
+    <button type="button" id="read_game_results_last_10_txn" tabindex="5">Read game results, last 10 txn</button><br />
+    <button type="button" id="read_game_results_all" tabindex="6">Read game results, all</button><br />
   <ul id="game_list">
   </ul>
-  Status: <input type="text" aria-label="Result of all the games" id="get_tx_status" size="10" readonly tabindex="-1">
+  <p>
+  Status: <input type="text" aria-label="Result of all the games" id="get_tx_status" size="70" readonly tabindex="-1">
   </p>
 
   <p></p>
